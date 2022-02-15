@@ -32,6 +32,25 @@ def get_widgets() :
 
   return json.dumps(json_data)
 
+@app.route('/add-widget')
+def add_widget():
+  mydb = mysql.connector.connect(
+    host="mysqldb",
+    user="root",
+    password="password",
+    database="inventory"
+  )
+  cursor = mydb.cursor()
+
+  cursor.execute("INSERT INTO widgets (name, description) "
+                "VALUES ('name', 'description');")
+  mydb.commit()
+
+  cursor.close()
+  mydb.close()
+
+  return "inserted"
+
 @app.route('/initdb')
 def db_init():
   mydb = mysql.connector.connect(
